@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@accesspay/core": ["packages/core/src/index.ts"],
+      "@accesspay/react": ["packages/react/src/index.tsx"],
+      "@accesspay/merchant-adapter": ["packages/merchant-adapter/src/index.ts"],
+      "@accesspay/paypal": ["packages/paypal/src/index.ts"],
+      "@accesspay/ai": ["packages/ai/src/index.ts"],
+      "@accesspay/a11y": ["packages/a11y/src/index.tsx"]
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "tests/**/*.ts",
+    "db/**/*.ts",
+    "scripts/**/*.ts",
+    "*.ts"
+  ],
+  "exclude": ["node_modules", "apps/web/.next"]
+}

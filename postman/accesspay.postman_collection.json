@@ -1,0 +1,442 @@
+{
+  "info": {
+    "name": "AccessPay sandbox regression",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Demo-only. Sign in via cookie jar. Set local secret variables yourself. Official PayPal approval must be completed by a buyer in the app, never bypassed by this collection."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "demoPassword",
+      "value": ""
+    },
+    {
+      "key": "merchantApiKey",
+      "value": ""
+    },
+    {
+      "key": "sessionId",
+      "value": ""
+    },
+    {
+      "key": "version",
+      "value": 1
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    },
+    {
+      "key": "receiptId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"healthy\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sign in (cookie jar)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/auth/sign-in",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo@accesspay.test\",\n  \"password\": \"{{demoPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"signed in\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create authoritative Northstar snapshot",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{merchantApiKey}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/merchant/checkout-sessions",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"storeId\": \"store-a\",\n  \"items\": [\n    {\n      \"sku\": \"lamp-01\",\n      \"qty\": 1\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"created\", () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) { const s = pm.response.json(); pm.collectionVariables.set(\"sessionId\", s.id); pm.collectionVariables.set(\"version\", s.version); pm.test(\"server total\", () => pm.expect(s.totalMinor).to.eql(2940)); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get review",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}"
+      }
+    },
+    {
+      "name": "Reject client-trusted amount",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/review",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"version\": 1,\n  \"totalMinor\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"reject arbitrary financial fields\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject stale version",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/review",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"version\": 999\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"stale review rejected\", () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Confirm review",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/review",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"version\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"reviewed\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Explain shipping",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/help/explain",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": \"{{sessionId}}\",\n  \"question\": \"Why is shipping $3?\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"grounded shipping\", () => pm.expect(pm.response.json().answer).to.include(\"$3.00\"));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create PayPal sandbox order (requires credentials)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/paypal/order",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"version\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 200) pm.collectionVariables.set(\"orderId\", pm.response.json().orderId);",
+              "pm.test(\"configured sandbox or explicit unavailable\", () => pm.expect([200,503,409]).to.include(pm.response.code));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Status / reconciliation",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/status"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.json().receiptId) pm.collectionVariables.set(\"receiptId\", pm.response.json().receiptId);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Capture only after official buyer approval",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/paypal/capture",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orderId\": \"{{orderId}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"unapproved orders are not success\", () => { const s = pm.response.json(); if (s.state === \"COMPLETED\") pm.expect(s.receiptId).to.be.a(\"string\"); });",
+              "if (pm.response.json().receiptId) pm.collectionVariables.set(\"receiptId\", pm.response.json().receiptId);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Repeat same capture (never a new payment)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/checkout-sessions/{{sessionId}}/paypal/capture",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orderId\": \"{{orderId}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Read verified receipt",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "{{baseUrl}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/receipts/{{receiptId}}"
+      }
+    }
+  ]
+}

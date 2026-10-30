@@ -1,0 +1,39 @@
+{
+  "name": "accesspay",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @accesspay/web dev",
+    "build": "pnpm --filter @accesspay/web build",
+    "start": "pnpm --filter @accesspay/web start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "check": "pnpm typecheck && pnpm test && pnpm build",
+    "format": "prettier --write apps packages db tests scripts docs postman .github *.json *.ts *.yaml README.md",
+    "format:check": "prettier --check apps packages db tests scripts docs postman .github *.json *.ts *.yaml README.md"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.1",
+    "@playwright/test": "1.58.2",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "prettier": "3.9.10",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.13",
+    "drizzle-orm": "0.45.4",
+    "postgres": "3.4.8",
+    "zod": "4.3.6"
+  }
+}

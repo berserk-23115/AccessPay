@@ -1,0 +1,9 @@
+{
+  "name": "@accesspay/a11y",
+  "version": "0.1.0",
+  "private": true,
+  "exports": "./src/index.tsx",
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@accesspay/react",
+  "version": "0.1.0",
+  "private": true,
+  "exports": "./src/index.tsx",
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@accesspay/core": "workspace:*",
+    "@accesspay/a11y": "workspace:*",
+    "@accesspay/merchant-adapter": "workspace:*",
+    "@paypal/react-paypal-js": "10.6.1"
+  }
+}

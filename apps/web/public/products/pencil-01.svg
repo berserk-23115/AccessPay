@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <ellipse cx="200" cy="256" rx="122" ry="13" fill="#bdb4a4" />
+  <g transform="rotate(20 200 150)">
+    <path d="M116 60h17v170l-8 24-9-24Z" fill="#53674c" />
+    <path d="m116 230 9 24 8-24" fill="#d0af79" />
+    <path d="m122 248 3 6 2-6" fill="#28362e" />
+    <path d="M149 50h17v170l-8 24-9-24Z" fill="#9e693f" />
+    <path d="m149 220 9 24 8-24" fill="#d0af79" />
+    <path d="M182 40h17v170l-8 24-9-24Z" fill="#b19249" />
+    <path d="m182 210 9 24 8-24" fill="#d0af79" />
+    <path d="M215 45h17v170l-8 24-9-24Z" fill="#53674c" />
+    <path d="m215 215 9 24 8-24" fill="#d0af79" />
+    <path d="M248 55h17v170l-8 24-9-24Z" fill="#9e693f" />
+    <path d="m248 225 9 24 8-24" fill="#d0af79" />
+    <path d="M281 65h17v170l-8 24-9-24Z" fill="#b19249" />
+    <path d="m281 235 9 24 8-24" fill="#d0af79" />
+  </g>
+</svg>
