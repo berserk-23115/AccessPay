@@ -1,0 +1,371 @@
+{
+  "version": 1,
+  "skills": {
+    "accessibility-general": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ACCESSIBILITY-general/SKILL.md",
+      "computedHash": "d25e01acf4f471ff184eaa8c157c35354320c4b05b6dd54953a841bdfe2c0c76"
+    },
+    "anchor-links": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/anchor-links/SKILL.md",
+      "computedHash": "a14d979d7af3766fda4d35b87a8c580cd75a18c8d99101c8710589b1483eb026"
+    },
+    "aria-live-regions": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/aria-live-regions/SKILL.md",
+      "computedHash": "29a98faced7e59f4afa63a8805e5cf853e246419b09d2c2263efb609cc806024"
+    },
+    "audio-video": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/audio-video/SKILL.md",
+      "computedHash": "26efd524332f50e4e46db4ca18d7c9ee71c59b9c6c1c18e35866f729bb42058e"
+    },
+    "axe-rules": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/axe-rules/SKILL.md",
+      "computedHash": "df2bb66982b9b4d81e7f6c493eb48da184ade956f52bbdb8ec680533530f7337"
+    },
+    "behavioral-a11y": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/behavioral-a11y/SKILL.md",
+      "computedHash": "767f6202731d3e54e3de813feb0f250931fb5e311dfda1ba6ac88164396d56fb"
+    },
+    "bug-reporting": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/bug-reporting/SKILL.md",
+      "computedHash": "b1f0e08f01431f538920eae78c852f00e3aa26efd0805eae24401002041a8e7f"
+    },
+    "charts-graphs": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/charts-graphs/SKILL.md",
+      "computedHash": "ab5b1c830fe46fe4ad12c3647640af649ef6eaef7e51a4e1989867cbf7d1513b"
+    },
+    "ci-cd": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ci-cd/SKILL.md",
+      "computedHash": "f5953ce61df50105caf20afe264f17d713fb43e97b7c15c27f8dbdf6d1556b9d"
+    },
+    "cli-audit": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/cli-audit/SKILL.md",
+      "computedHash": "0ce26d6ae190b82c33954e301cbf43b43297dcdf978c1f5cd6cdd4739cdd1d0d"
+    },
+    "color-contrast": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/color-contrast/SKILL.md",
+      "computedHash": "8b3da4292ae48f13a92b86ce08d13da8d51b5f94f38cc92bd64480db81fee2a8"
+    },
+    "content-design": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/content-design/SKILL.md",
+      "computedHash": "3eb409e90c33946c3e016ca4c08948767a4f9de4e227da2fe57bb32577a221c9"
+    },
+    "forms": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/forms/SKILL.md",
+      "computedHash": "1dbaf0400fdf5903db701c1718d4a2024c3a4362b6afac14340b74c74eb2885f"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "89496d5dd00f4810205f351759594fc2742bf8eea85a2f2b2d1de59f4bd91576"
+    },
+    "image-alt-text": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/image-alt-text/SKILL.md",
+      "computedHash": "13c434f7e23cfa84a393590d7575cd94bf3d85cc3c249a00df18c1a0c6095ea6"
+    },
+    "keyboard": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/keyboard/SKILL.md",
+      "computedHash": "7f717ffaa2b07ad6fc7c7cffad3bb271640c60becdd507060df418e746d544b2"
+    },
+    "light-dark-mode": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/light-dark-mode/SKILL.md",
+      "computedHash": "a2291295badc1b1333a71110e91ee59daab9e029c558edd057904fe0315ae4d5"
+    },
+    "manual-testing": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/manual-testing/SKILL.md",
+      "computedHash": "043e11bea39001be7e5fb8fd8efd3332385364d9472a9e58a370220e786dbd99"
+    },
+    "maps": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/maps/SKILL.md",
+      "computedHash": "c2aa74c02235820eac64ae64f3b31c53ee7e52e7fe0130a1ce0405acea7cee7d"
+    },
+    "mermaid": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/mermaid/SKILL.md",
+      "computedHash": "b8ee0429c0b05e89a4acad68f54ec9ca9443e0e19343301c99e76039b77d5b6e"
+    },
+    "navigation": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/navigation/SKILL.md",
+      "computedHash": "9e94960a3e1f35e9748a0fad26c3f10cc4cef51acda24254ecc41710fd1342a7"
+    },
+    "opquast-digital-quality": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/opquast-digital-quality/SKILL.md",
+      "computedHash": "0c08b53407a0f9f32d67b74691f2f0a08390569320a58d3f722b50dba18203c9"
+    },
+    "plain-language": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/plain-language/SKILL.md",
+      "computedHash": "2d6c710dce9419e1d0a0c336844c390cbed640f6946508d2f08879fb50107ebe"
+    },
+    "print": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/print/SKILL.md",
+      "computedHash": "16c61dc5b00160041987091d37b396bd3ed2766460d1eb839b84ddaeeb1a4652"
+    },
+    "progressive-enhancement": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/progressive-enhancement/SKILL.md",
+      "computedHash": "d575db9e3f900c261b02d843a4f5601b139b321f8078471d9086eb6aaf6d404f"
+    },
+    "render-background-workers": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-background-workers/SKILL.md",
+      "computedHash": "146f86eac8dcd86065d72be79aa781951b0ef99a285656f53a4e1f288d0593df"
+    },
+    "render-blueprints": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-blueprints/SKILL.md",
+      "computedHash": "cca280608976f5c4bb45a156c9162812c855c8e4c858ac4dd18d95007a87760c"
+    },
+    "render-cli": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-cli/SKILL.md",
+      "computedHash": "d356539af9e8079cb1503cb1b24aeaa5bcc915f350c92789f61cbf8b46693cb4"
+    },
+    "render-cron-jobs": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-cron-jobs/SKILL.md",
+      "computedHash": "aba19501bc2a68f5d64bf8ee909c3f8e145a40d1dfe693d24af392130c93b683"
+    },
+    "render-debug": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-debug/SKILL.md",
+      "computedHash": "9854b99e17eb51cc6305996f2c7923a89847f5f13c65d7fd26c4477945061731"
+    },
+    "render-deploy": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-deploy/SKILL.md",
+      "computedHash": "1312e31396bb9559c6ccdc5b43eaa09f2681695b309d44ed1a85ce4861e6f584"
+    },
+    "render-disks": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-disks/SKILL.md",
+      "computedHash": "010b729760a27660a58df61cd37d6f2360f96505e026c2d886e0d9a6996e7b4b"
+    },
+    "render-docker": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-docker/SKILL.md",
+      "computedHash": "a6c8caeafc40063cb1388846a38021094cd6ee0838925213e11a5baa63a9e1a4"
+    },
+    "render-domains": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-domains/SKILL.md",
+      "computedHash": "d72e211472d92ec7c8786f952800518db17dfb9cc7fd44c70787a42a13bc83e8"
+    },
+    "render-env-vars": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-env-vars/SKILL.md",
+      "computedHash": "d11620c236288029061026bdc2b709893d596b1721488125ad229f1b3e523c11"
+    },
+    "render-keyvalue": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-keyvalue/SKILL.md",
+      "computedHash": "fc047a9146535071f58193e23cb4ea458c95c65791bf3f86e38cbcfab632d8fe"
+    },
+    "render-mcp": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-mcp/SKILL.md",
+      "computedHash": "16cc10afda79b8c3c26d57ca8a5ea1d67a02a482391256edaf7ae81e120a91be"
+    },
+    "render-migrate-from-heroku": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-migrate-from-heroku/SKILL.md",
+      "computedHash": "f95b6f92817497828b7e93e209ef29e81d13d63710f8765d2170ccc1ba986c10"
+    },
+    "render-monitor": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-monitor/SKILL.md",
+      "computedHash": "88e0bcc99f519d07a06630a9fd969b31776998b1a6a91e2cff48780e0cded844"
+    },
+    "render-networking": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-networking/SKILL.md",
+      "computedHash": "60f7f21b4f114123f895b60da0fec320bbe434f52fa19d78d7d6362d7f0206d6"
+    },
+    "render-postgres": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-postgres/SKILL.md",
+      "computedHash": "56382335b7913cc32e1ed44346e8764e20dcdf00d7d8fc62cfcd6cc7cf845dc6"
+    },
+    "render-private-services": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-private-services/SKILL.md",
+      "computedHash": "233e6cc2843ab50210c8e27f4a1528c3e49d4e50c5028c6206daae22777bbf05"
+    },
+    "render-sandboxes": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-sandboxes/SKILL.md",
+      "computedHash": "212a78f5477065482b3b8aceb5574269cde214cf9a05f70c654c10dccda158cf"
+    },
+    "render-scaling": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-scaling/SKILL.md",
+      "computedHash": "0226012c0d1c316ca0fb729f23181ec8ff190d8e4bce0f77a896a963d376eba9"
+    },
+    "render-static-sites": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-static-sites/SKILL.md",
+      "computedHash": "9ac96b1c3bd8076963e40241c169f0aeceb34c93db26e6efe297a5810002a80e"
+    },
+    "render-web-services": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-web-services/SKILL.md",
+      "computedHash": "a98ed885108b7804b102be5253b6e6ea9ba99c6383a2d31b94bdce0d4e3e2643"
+    },
+    "render-workflows": {
+      "source": "render-oss/skills",
+      "sourceType": "github",
+      "skillPath": "skills/render-workflows/SKILL.md",
+      "computedHash": "90414e2a90bde571f432146190028160e3cfc0b8b85151714f411f1bfdae15e2"
+    },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn/SKILL.md",
+      "computedHash": "b864a958765563321f485a96f4d59c0bb6539f4286ab6d8b8b66895b7ebd302d"
+    },
+    "speech-recognition": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/speech-recognition/SKILL.md",
+      "computedHash": "ebd7a588701ba72d63341b031dff0d7304ad75f39d889509ab4d3b92079e1b2e"
+    },
+    "svg": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/svg/SKILL.md",
+      "computedHash": "9759e0cd8b918d2f626d7a75c1e00d52c038b928816967741cbb3b4f714c728a"
+    },
+    "tables": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tables/SKILL.md",
+      "computedHash": "c1c40b4dc575ab4b9fcdee1f5bbadbbc0abc65e9e940de9dcfc7cad46f02e8a9"
+    },
+    "test-driven-development": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "skillPath": "skills/test-driven-development/SKILL.md",
+      "computedHash": "3cfe4ebb6fa7288f668d87880d279c8e48f7a92b63415e296857060f5ce22e05"
+    },
+    "tooltips": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tooltips/SKILL.md",
+      "computedHash": "d978df96bbd6192f89b40793d41829eb6541ce64acdd41d5ba67c574151e19a8"
+    },
+    "touch-pointer": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/touch-pointer/SKILL.md",
+      "computedHash": "34c01144bec2662d7d3cc6ad2393c81d4e6d07da5b6dd405c0df5d514f02f8a2"
+    },
+    "upstream-first": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/upstream-first/SKILL.md",
+      "computedHash": "85cb7d67e9bbf4848b4a3c26776a31a759522f768b83e3dfd80c050e7b950093"
+    },
+    "user-personalization": {
+      "source": "mgifford/accessibility-skills",
+      "sourceType": "github",
+      "skillPath": "skills/user-personalization/SKILL.md",
+      "computedHash": "64f7b714b91d646416dbce1bf24d26391c341e56b300278ce2d4bde25932c2dd"
+    },
+    "vercel-composition-patterns": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/composition-patterns/SKILL.md",
+      "computedHash": "575757e3e25761c8c562d6e395d29f0b76c98b1273c0bd72d88e6ab1bc9c7d42"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "ca7b0c0c6e5f2750043f7f0cd72d16ac4e2abc48f9b5500d047a4b77a2506212"
+    },
+    "verification-before-completion": {
+      "source": "obra/superpowers",
+      "sourceType": "github",
+      "skillPath": "skills/verification-before-completion/SKILL.md",
+      "computedHash": "b529822bdac4b197b180fe12225cff86b930b65910435103c10622df7f041651"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+    },
+    "webapp-testing": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/webapp-testing/SKILL.md",
+      "computedHash": "ad5b1fc52807e9afa4635e59218a026b164dc58b6c3f41b0f7c644dcd6ccf572"
+    }
+  }
+}
