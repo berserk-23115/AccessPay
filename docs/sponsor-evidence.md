@@ -16,4 +16,4 @@ Claims below distinguish source preparation from running-service evidence. Do no
 | Astropods | Not included                                                                                           | None                                                       |
 | Bryntum   | Not included                                                                                           | None                                                       |
 
-The required AI integration is a server-only Claude question classifier with deterministic merchant-fact answers. Common fact lookup works without a key. No live Claude request was made without user credentials; do not imply provider-call evidence from local fallback tests.
+The required AI integration is a server-only open-weight model on Groq (`openai/gpt-oss-20b`): a request-to-order proposal limited to catalog SKUs and quantities, and a question classifier with deterministic merchant-fact answers. Common fact lookup works without a key. No live model request has been made yet; do not imply provider-call evidence from local fallback tests.

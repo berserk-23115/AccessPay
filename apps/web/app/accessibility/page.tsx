@@ -21,8 +21,12 @@ export default function Page() {
           Read the merchant, items, shipping, tax, and total as structured text.
         </li>
         <li>
-          Ask questions by typing. No microphone, camera, audio, or spoken
-          response is required.
+          Type or dictate what you want to buy. Speaking is optional: every step
+          works without a microphone, camera, or audio.
+        </li>
+        <li>
+          On Android, your phone can vibrate when a payment succeeds, fails, or
+          needs attention. The same status is always written on the page.
         </li>
         <li>
           Use browser zoom or Reading preferences at the bottom of the page.

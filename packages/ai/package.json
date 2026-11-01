@@ -4,6 +4,7 @@
   "private": true,
   "exports": "./src/index.ts",
   "dependencies": {
-    "@accesspay/core": "workspace:*"
+    "@accesspay/core": "workspace:*",
+    "zod": "4.3.6"
   }
 }

@@ -50,6 +50,7 @@ export default async function Layout({
               </span>
             </a>
             <nav aria-label="Main">
+              <a href="/assistant">Assistant</a>
               <a href="/store-a">Demo stores</a>
               <a href="/workspace">Your checkouts</a>
               <a href="/handoff">Enter a pairing code</a>

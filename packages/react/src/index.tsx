@@ -19,7 +19,7 @@ import type {
   FormResult,
   MerchantAdapter,
 } from "@accesspay/merchant-adapter";
-import { Icon } from "@accesspay/a11y";
+import { Icon, playHaptic, type Haptic } from "@accesspay/a11y";
 
 type Context = {
   session: PublicSession;
@@ -28,6 +28,12 @@ type Context = {
   setSession(s: PublicSession): void;
   announce(message: string): void;
   clientId?: string;
+};
+const stateHaptics: Partial<Record<PublicSession["state"], Haptic>> = {
+  COMPLETED: "success",
+  FAILED: "failure",
+  CANCELLED: "attention",
+  PENDING: "attention",
 };
 const CheckoutContext = createContext<Context | null>(null);
 function useCheckout() {
@@ -50,6 +56,13 @@ export function AccessPayProvider({
 }) {
   const [session, setSession] = useState(initialSession),
     [status, announce] = useState("");
+  const lastState = useRef(initialSession.state);
+  useEffect(() => {
+    if (session.state === lastState.current) return;
+    lastState.current = session.state;
+    const haptic = stateHaptics[session.state];
+    if (haptic) playHaptic(haptic);
+  }, [session.state]);
   useEffect(() => {
     if (["COMPLETED", "FAILED", "CANCELLED"].includes(session.state)) return;
     let active = true;

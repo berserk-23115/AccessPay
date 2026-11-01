@@ -31,6 +31,7 @@ describe("session and request boundaries", () => {
     expect(safeReturnPath("//evil.test")).toBe("/workspace");
     expect(safeReturnPath("/\\evil.test")).toBe("/workspace");
     expect(safeReturnPath("/review/cs_123")).toBe("/review/cs_123");
+    expect(safeReturnPath("/assistant")).toBe("/assistant");
   });
 });
 describe("read-only explanation boundaries", () => {

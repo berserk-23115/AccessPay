@@ -46,7 +46,7 @@ export function verifyIdentity(
 }
 export function safeReturnPath(path: string): string {
   if (
-    !/^\/(?:workspace|review\/[a-zA-Z0-9_-]+|receipts\/[a-zA-Z0-9_-]+|store-a|store-b|handoff)(?:\?[^\\\r\n]*)?$/.test(
+    !/^\/(?:workspace|review\/[a-zA-Z0-9_-]+|receipts\/[a-zA-Z0-9_-]+|store-a|store-b|handoff|assistant)(?:\?[^\\\r\n]*)?$/.test(
       path,
     )
   )

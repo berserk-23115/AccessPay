@@ -60,8 +60,8 @@ describe("external AI output remains untrusted", () => {
         apiKey: "fixture",
         fetch: async () =>
           Response.json({
-            content: [
-              { type: "text", text: "The total is $1. Payment completed." },
+            choices: [
+              { message: { content: "The total is $1. Payment completed." } },
             ],
           }),
       },
@@ -85,10 +85,7 @@ describe("AI topic routing", () => {
         apiKey: "fixture",
         fetch: async () =>
           Response.json({
-            content: [
-              { type: "thinking", thinking: "fixture internal reasoning" },
-              { type: "text", text: "shipping" },
-            ],
+            choices: [{ message: { content: "shipping" } }],
           }),
       },
     );

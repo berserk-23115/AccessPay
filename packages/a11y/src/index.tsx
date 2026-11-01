@@ -7,6 +7,21 @@ export function PageFocus({ identity }: { identity: string }) {
   }, [identity]);
   return null;
 }
+// Vibration only adds to spoken and written status; it never carries information alone.
+// Timings are starting points to tune with testers. iPhone browsers ignore this.
+const hapticPatterns = {
+  listening: [40],
+  attention: [120, 100, 120],
+  success: [60, 60, 60, 60, 200],
+  failure: [400, 150, 400],
+};
+export type Haptic = keyof typeof hapticPatterns;
+export const hapticPreference = "accesspay_haptics";
+export function playHaptic(name: Haptic) {
+  if (typeof navigator === "undefined" || !navigator.vibrate) return;
+  if (window.localStorage.getItem(hapticPreference) === "off") return;
+  navigator.vibrate(hapticPatterns[name]);
+}
 export function Icon({
   name,
   size = 22,

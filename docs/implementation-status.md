@@ -23,9 +23,10 @@ This report maps the master plan to code and verifiable evidence. Implementation
 - Server-side Drizzle is the one ORM. Local PGlite is PostgreSQL-compatible and durable; hosted production refuses local storage.
 - Semantic CSS and small React primitives provide styling. Tailwind was not added; the UI uses a compact, contrast-checked semantic token system.
 - A global database row lock intentionally serializes this small demo ledger. It is correct for the tested races, not a production throughput claim. Per-session locks/outbox reconciliation belong to a scaling follow-up.
-- WebAuthn/passkeys are optional in the plan and remain disabled. There is no fake verification fallback. Alternate demo password sign-in supports paste/password managers.
-- Common questions use deterministic merchant-fact lookup; unfamiliar questions optionally use Claude for topic routing. Model text never becomes a financial string.
-- Browser extension, voice, sponsor dashboards, and discovery adapters are omitted as permitted by the plan’s cut order.
+- WebAuthn/passkeys were dropped by team decision on 1 November 2026. There is no fake verification fallback. Alternate demo password sign-in supports paste/password managers.
+- Common questions use deterministic merchant-fact lookup; unfamiliar questions optionally use the Groq-hosted model for topic routing. Model text never becomes a financial string.
+- `/assistant` turns typed or dictated requests into catalog-validated proposals with a Groq-hosted open-weight model; browser dictation and Android vibration are implemented but untested on real devices.
+- Browser extension, sponsor dashboards, and discovery adapters are omitted as permitted by the plan’s cut order.
 
 ## External release gates still open
 

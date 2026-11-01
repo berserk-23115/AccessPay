@@ -328,3 +328,63 @@ test("theme activates only on command and persists without leaving the checkout"
     contentType: "application/json",
   });
 });
+test("assistant has no axe violations and is honest without an AI key", async ({
+  page,
+}) => {
+  await page.goto("/assistant");
+  await page.getByLabel("What would you like to buy?").fill("Two desk lamps");
+  await page.getByRole("button", { name: "Find this" }).click();
+  await expect(
+    page.getByText("The assistant is not available right now", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Review this order" }),
+  ).toHaveCount(0);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+test("dictation fills the field for checking, vibrates, and never submits", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const scope = window as unknown as Record<string, unknown>;
+    scope.vibrations = [];
+    Object.defineProperty(navigator, "vibrate", {
+      configurable: true,
+      value: (pattern: number[]) =>
+        (scope.vibrations as number[][]).push(pattern),
+    });
+    scope.SpeechRecognition = class {
+      onresult?: (event: unknown) => void;
+      onend?: () => void;
+      start() {
+        this.onresult?.({ results: [[{ transcript: "two desk lamps" }]] });
+        this.onend?.();
+      }
+      stop() {}
+    };
+  });
+  await page.goto("/assistant");
+  const field = page.getByLabel("What would you like to buy?");
+  await page.getByRole("button", { name: "Dictate" }).click();
+  await expect(field).toHaveValue("two desk lamps");
+  await expect(field).toBeFocused();
+  await expect(page.getByRole("status").first()).toContainText("Heard:");
+  await expect(
+    page.getByRole("heading", { name: "We need a little more" }),
+  ).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => (window as unknown as Record<string, unknown>).vibrations,
+    ),
+  ).toEqual([[40]]);
+  await page.getByLabel("Vibrate for payment status").uncheck();
+  await page.getByRole("button", { name: "Dictate" }).click();
+  expect(
+    await page.evaluate(
+      () => (window as unknown as Record<string, unknown>).vibrations,
+    ),
+  ).toEqual([[40]]);
+});

@@ -6,6 +6,10 @@
 
 **Short pitch:** An embeddable accessibility layer for merchant checkout. AccessPay turns authoritative merchant transaction data into a clear, screen-reader- and braille-compatible review; lets customers use speech or text to ask questions; supports optional device passkeys and safe draft handoff; and returns a verified payment outcome from PayPal. AI explains and clarifies, while PayPal and deterministic server code control money movement.
 
+## Team decision, 1 November 2026
+
+Voice and haptics are now priorities, and passkeys are dropped. The AI provider is Groq with the open-weight `openai/gpt-oss-20b`, replacing Claude in this plan. This replaces the cut order in the schedule and the browser-vibration non-goal. Vibration only adds to written and screen-reader status. Everything else in this plan stands.
+
 ## 0. Executive decision and feasibility
 
 **Build:** a merchant-integrated React checkout SDK, a hosted responsive review/PWA, one PayPal sandbox backend, two sample stores consuming the SDK, and manual accessibility testing. **Optional:** Chrome extension side panel with read-only page assistance. **Do not build for the hackathon:** arbitrary-site payment interception, personal PayPal transfers, camera-based face authentication, continuous sign-language translation, or a custodial marketplace.
@@ -88,7 +92,7 @@ flowchart TB
     REC[Receipt and reconciliation]
   end
   DB[(Render Postgres)]
-  LLM[Claude / selected LLM]
+  LLM[Groq-hosted open-weight LLM]
   PP[PayPal JS SDK v6 + Orders v2]
   HOOK[Signed PayPal webhooks]
   MA --> SDK
@@ -134,7 +138,7 @@ A future real multi-merchant service should use merchant-side gateway adapters o
 | Payment server | `@paypal/paypal-server-sdk`, REST Orders v2, webhook verification |
 | Database | PostgreSQL + Drizzle ORM (or Prisma; choose one only) |
 | Authentication | Cookie-based sessions, WebAuthn/passkeys with accessible alternate sign-in |
-| AI | Claude (structured extraction and explanation); immutable financial fields rendered by templates |
+| AI | Open-weight model on Groq (structured extraction and explanation); immutable financial fields rendered by templates |
 | Speech | Optional push-to-talk STT adapter; typed interaction always available; OS screen reader owns output |
 | Monitoring | Structured logs, OpenTelemetry; scrub personal and payment info |
 | Tests | Vitest, Playwright, axe-core, Postman collection, manual AT tests |

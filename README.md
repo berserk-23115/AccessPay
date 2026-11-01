@@ -43,8 +43,8 @@ Set the following values in that file; restart the app after changing credential
 | `PAYPAL_CLIENT_SECRET`  | Server-only sandbox application secret                                            |
 | `PAYPAL_MERCHANT_ID`    | Sandbox business seller merchant ID; verified on every order/capture              |
 | `PAYPAL_WEBHOOK_ID`     | Registered webhook ID used for official signature verification                    |
-| `AI_API_KEY`            | Optional server-only Anthropic key                                                |
-| `AI_MODEL`              | Configurable Claude model identifier                                              |
+| `AI_API_KEY`            | Server-only Groq key; required for the assistant                                  |
+| `AI_MODEL`              | Groq model identifier; defaults to `openai/gpt-oss-20b`                           |
 | `ALLOW_DEMO_AUTH`       | Must explicitly be `true` to enable the shared account in production              |
 | `DEMO_ACCOUNT_PASSWORD` | Required custom demo password for hosted environments                             |
 | `MERCHANT_API_KEY`      | Server-to-server credential for the demo merchant checkout API                    |
@@ -55,7 +55,13 @@ PayPal’s [Next.js 16 guide](https://developer.paypal.com/guides/nextjs-checkou
 
 Without complete PayPal configuration, the UI explicitly says payment is unavailable. It cannot generate a simulated completed receipt. If a real request times out, the existing order stays pending and is reconciled before capture/retry. Do not start another checkout for an unresolved payment.
 
-AI routes questions to an allowlist of read-only merchant facts. Financial prose is deterministic; the model cannot authorize payment, change a price, or supply a recipient. Common questions work without an AI key, labelled as merchant facts. The default is Claude Haiku 5.5 with thinking disabled for this short classification task, following the [current model documentation](https://platform.claude.com/docs/en/models/haiku-5-5/overview). The selected Claude model must be enabled in your provider account. No live AI success is claimed without provider-call evidence.
+AI routes questions to an allowlist of read-only merchant facts. Financial prose is deterministic; the model cannot authorize payment, change a price, or supply a recipient. Common questions work without an AI key, labelled as merchant facts. The default is `openai/gpt-oss-20b` on [Groq](https://console.groq.com/docs/structured-outputs), a production model with strict structured output. No live AI success is claimed without provider-call evidence.
+
+## Assistant, voice and haptics
+
+`/assistant` turns a typed or dictated request into a proposed order. An open-weight model on Groq (`openai/gpt-oss-20b`) returns only SKUs and quantities through strict structured output; the catalog prices it, fixed strings describe it, and the shopper still reviews and approves in the normal checkout. It needs `AI_API_KEY`, and says it is unavailable without one.
+
+Dictation uses the browser's speech recognition where available (Chrome, including on Android). The browser's speech service receives the audio, the transcript is placed in the text field for checking, and nothing is submitted automatically. Vibration uses the Vibration API, so it works in Chrome on Android and not in iPhone browsers. It adds to written status and can be turned off on the assistant page.
 
 ## Packages and application
 
@@ -99,7 +105,7 @@ Production refuses to use a local/ephemeral ledger. The app is sandbox-only even
 
 ## Boundaries
 
-No browser extension, self-voicing, microphone capture, passkey step-up, arbitrary-site interception, sign-language recognition, personal transfers, independent live sellers, refunds, or sponsor dashboards are enabled. Optional features are deliberately absent from the product claims. Installability depends on browser support; offline mode shows only a static explanation and never cached payment data.
+No browser extension, self-voicing, passkey step-up, arbitrary-site interception, sign-language recognition, personal transfers, independent live sellers, refunds, or sponsor dashboards are enabled. Optional features are deliberately absent from the product claims. Installability depends on browser support; offline mode shows only a static explanation and never cached payment data.
 
 [Merchant integration](docs/merchant-integration.md) · [Threat model](docs/threat-model.md) · [Demo script](docs/demo-script.md) · [Sponsor evidence](docs/sponsor-evidence.md)
 

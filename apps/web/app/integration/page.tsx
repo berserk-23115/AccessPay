@@ -47,11 +47,10 @@ export default function Page() {
       </p>
       <h2>What this release leaves for later</h2>
       <p>
-        Live merchant onboarding, independent sellers, optional voice, device
-        passkeys, browser extensions, sponsor dashboards, and formal compliance
-        certification require separate work. The repository includes a
-        deployment blueprint, test suite, manual test procedures, and an
-        implementation status report.
+        Live merchant onboarding, independent sellers, device passkeys, browser
+        extensions, sponsor dashboards, and formal compliance certification
+        require separate work. The repository includes a deployment blueprint,
+        test suite, manual test procedures, and an implementation status report.
       </p>
       <a
         href="https://developer.paypal.com/guides/nextjs-checkout"

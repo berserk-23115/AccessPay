@@ -3,7 +3,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { isCheckoutError, cartInput } from "@accesspay/core";
-import { explain } from "@accesspay/ai";
+import { explain, propose, type Proposal } from "@accesspay/ai";
 import type { FormResult } from "@accesspay/merchant-adapter";
 import { requireIdentity, authenticateDemo } from "../lib/auth";
 import { baseUrl, runtime, sessionSecret } from "../lib/runtime";
@@ -72,7 +72,10 @@ export async function startCheckout(form: FormData) {
   await origin();
   const input = cartInput.parse({
     storeId: form.get("storeId"),
-    items: [{ sku: form.get("sku"), qty: Number(form.get("qty") ?? 1) }],
+    items: form.getAll("sku").map((sku, index) => ({
+      sku,
+      qty: Number(form.getAll("qty")[index] ?? 1),
+    })),
   });
   const { identity } = await import("../lib/auth");
   const actor = await identity();
@@ -198,6 +201,33 @@ export async function askHelp(
     };
   } catch (error) {
     return { error: message(error) };
+  }
+}
+export type AssistantResult = { request?: string; proposal?: Proposal };
+export async function askAssistant(
+  _previous: AssistantResult,
+  form: FormData,
+): Promise<AssistantResult> {
+  try {
+    await origin();
+    const { repo } = await runtime(),
+      actor = await requireIdentity();
+    await repo.rateLimit(`assistant:${actor.userId}`, 15, 60_000);
+    const request = z
+      .string()
+      .trim()
+      .min(1)
+      .max(500)
+      .parse(form.get("request"));
+    return {
+      request,
+      proposal: await propose(request, {
+        apiKey: process.env.AI_API_KEY,
+        model: process.env.AI_MODEL,
+      }),
+    };
+  } catch (error) {
+    return { proposal: { kind: "unavailable", message: message(error) } };
   }
 }
 export async function savePreference(form: FormData) {
