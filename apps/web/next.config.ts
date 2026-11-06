@@ -10,7 +10,14 @@ const config: NextConfig = {
   ],
   serverExternalPackages: ["@electric-sql/pglite", "postgres"],
   poweredByHeader: false,
-  allowedDevOrigins: ["127.0.0.1", "localhost"],
+  // Lets a tablet on the same network use the dev server when APP_BASE_URL points at this machine.
+  allowedDevOrigins: [
+    "127.0.0.1",
+    "localhost",
+    ...(process.env.APP_BASE_URL
+      ? [new URL(process.env.APP_BASE_URL).hostname]
+      : []),
+  ],
   async headers() {
     return [
       {
