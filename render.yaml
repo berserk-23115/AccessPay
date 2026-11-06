@@ -4,10 +4,10 @@ services:
     name: accesspay-web
     runtime: node
     region: singapore
-    plan: 0.5c-512mb
+    plan: free
     buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
-    preDeployCommand: pnpm db:migrate
-    startCommand: pnpm start
+    # Free instances may not run pre-deploy commands, so migrate on start.
+    startCommand: pnpm db:migrate && pnpm start
     healthCheckPath: /api/health
     autoDeployTrigger: "off"
     envVars:
@@ -47,7 +47,7 @@ services:
 databases:
   - name: accesspay-db
     region: singapore
-    plan: 0.1c-256mb
+    plan: free
     databaseName: accesspay
     user: accesspay
     ipAllowList: []
