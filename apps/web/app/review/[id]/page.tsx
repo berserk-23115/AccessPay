@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { isCheckoutError } from "@accesspay/core";
+import { amountReadback, isCheckoutError } from "@accesspay/core";
 import { PageFocus, Icon } from "@accesspay/a11y";
 import { CheckoutWorkspace } from "../../../components/checkout-workspace";
+import { NextStep } from "../../../components/next-step";
 import { pageIdentity } from "../../../lib/auth";
 import { runtime, paymentConfigured } from "../../../lib/runtime";
 import {
@@ -66,6 +67,21 @@ export default async function Page({
           Sandbox checkout
         </span>
       </div>
+      {s.canEdit && s.state === "REVIEW_REQUIRED" ? (
+        <NextStep
+          text={`You are paying ${amountReadback(s.totalMinor)} to ${s.merchantDisplayName}. Check the order below, or skip to the Confirm review button. Nothing is paid until you approve in PayPal.`}
+          label="Skip to Confirm review"
+          targetId="confirm-review"
+        />
+      ) : null}
+      {s.canEdit && ["READY", "CREATING", "CREATED"].includes(s.state) ? (
+        <NextStep
+          text={`Review confirmed. Next, approve ${amountReadback(s.totalMinor)} with PayPal.`}
+          label="Skip to the PayPal button"
+          targetId="paypal-next"
+          focusOnLoad
+        />
+      ) : null}
       <ol className="checkout-steps" aria-label="Payment progress">
         <li
           aria-current={

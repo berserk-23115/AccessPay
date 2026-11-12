@@ -378,7 +378,11 @@ export function AccessPayCheckout() {
             Confirm that the merchant, items, and total are correct. This step
             does not make a payment.
           </p>
-          <button className="button primary full" type="submit">
+          <button
+            id="confirm-review"
+            className="button primary full"
+            type="submit"
+          >
             Confirm review
             <Icon name="arrow" />
           </button>
@@ -459,9 +463,9 @@ export function PayPalPaymentArea() {
     );
   return (
     <div>
-      <p className="small">
+      <p className="small" id="paypal-next" tabIndex={-1}>
         <Icon name="check" size={16} /> Review confirmed. PayPal will ask you to
-        approve {money(s.totalMinor)} USD.
+        approve {money(s.totalMinor)} USD. The PayPal button is next.
       </p>
       {load ? <PayPalLazy /> : <p>Loading PayPal…</p>}
       <noscript>

@@ -134,28 +134,22 @@ export function AssistantForm() {
               ? "Suggested order"
               : "We need a little more"}
           </h2>
-          {result.request ? (
-            <p className="small muted">You asked: {result.request}</p>
-          ) : null}
           {proposal.kind === "proposal" ? (
             <>
-              <p>From {proposal.cart.merchantDisplayName}</p>
-              <ul>
-                {proposal.cart.lineItems.map((item) => (
-                  <li key={item.sku}>
-                    {item.name}, quantity {item.qty}
-                  </li>
-                ))}
-              </ul>
               <p>
+                {proposal.cart.lineItems
+                  .map((item) => `${item.name}, quantity ${item.qty}`)
+                  .join("; ")}{" "}
+                from {proposal.cart.merchantDisplayName}.{" "}
                 <strong>
                   <span aria-hidden="true">
-                    Total {money(proposal.cart.totalMinor)} USD
+                    Total {money(proposal.cart.totalMinor)} USD.
                   </span>
                   <span className="sr-only">
-                    Total {amountReadback(proposal.cart.totalMinor)}
+                    Total {amountReadback(proposal.cart.totalMinor)}.
                   </span>
-                </strong>
+                </strong>{" "}
+                Next, choose Review this order.
               </p>
               <form action={startCheckout}>
                 <input
@@ -173,10 +167,19 @@ export function AssistantForm() {
                   Review this order
                 </button>
               </form>
-              <p className="small muted">This does not make a payment.</p>
+              <p className="small muted">
+                This does not make a payment. You will check the details, then
+                pay with PayPal.
+              </p>
+              {result.request ? (
+                <p className="small muted">You asked: {result.request}</p>
+              ) : null}
             </>
           ) : (
             <>
+              {result.request ? (
+                <p className="small muted">You asked: {result.request}</p>
+              ) : null}
               <p>{proposal.message}</p>
               {proposal.kind === "clarify" && proposal.options.length ? (
                 <ul>
