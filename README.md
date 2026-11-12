@@ -4,7 +4,28 @@ Every payment. Every ability. Every device.
 
 AccessPay implements the core journeys in [Plan.md](Plan.md): two participating demo stores, a shared React checkout SDK, a responsive hosted payment workspace, exact server-owned amounts, typed explanations, one-time draft handoff, PayPal sandbox order/capture adapters, and persistent verified receipts.
 
-**Status:** working local application with automated verification. Real PayPal sandbox transactions, hosted Render deployment, live AI calls, and human assistive-technology sessions require credentials/devices and are not represented as completed. See [implementation status](docs/implementation-status.md) and [test evidence](docs/at-test-report.md).
+**Try it:** <https://accesspay-web.onrender.com> (free hosting: the first visit can take about a minute to wake up). Sign in with `demo@accesspay.test` and `accesspay-demo-only`. At PayPal, use a sandbox **personal** buyer account; never a real PayPal login. All money is PayPal sandbox money.
+
+## What it does
+
+AccessPay is a checkout and payment assistant for blind, low-vision, deaf and motor-impaired shoppers, and for everyone else, with no separate "accessible version".
+
+- **Say or type what you want.** "Two desk lamps" or "do desk lamp lena hai" becomes a proposed order. The AI only picks products and quantities; prices always come from the store catalog.
+- **Review before paying.** Every amount is spoken in words for screen readers ("55 US dollars and 80 cents"), focus moves to each new result, and quantities can be changed before anything is paid.
+- **Pay with PayPal.** The shopper approves in PayPal (React SDK v6), the server captures with the Orders v2 API, and a receipt is saved only after PayPal confirms the capture. Signed webhooks reconcile the result.
+- **Feel the result.** On Android Chrome, distinct vibration patterns mark a suggestion, an error, and a completed payment. The success pattern is used only for a captured payment. Vibration can be turned off.
+- **Safety by design.** The AI cannot pay, set a price, or send money to a person; requests like "send Rahul 500 dollars" are refused. Card numbers, emails and phone numbers are removed before any text reaches the AI service.
+
+## AI and tools used
+
+| Tool                                                               | How it is used                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Groq** running open-weight **`openai/gpt-oss-20b`**              | Turns a typed or dictated request into a proposed order using strict JSON-schema output (only SKUs, quantities and an outcome such as `unsupported`). Also classifies free-form checkout questions to an allowlist of merchant facts. |
+| Browser speech recognition                                         | Dictation fills the text field; nothing submits automatically.                                                                                                                                                                        |
+| **PayPal** sandbox: React SDK v6, Server SDK (Orders v2), webhooks | Order creation, buyer approval, capture, merchant-ID checks and signed webhook verification.                                                                                                                                          |
+| **Render**                                                         | Hosts the web app and Postgres.                                                                                                                                                                                                       |
+
+**Status:** working, hosted application. Real PayPal sandbox payments complete end to end (order, approval, capture, receipt), and the assistant runs on live Groq calls. The team tested on laptop and phone browsers; the app has not yet been tested with blind or deaf participants. See [implementation status](docs/implementation-status.md) and [test evidence](docs/at-test-report.md).
 
 ## Run locally
 
@@ -70,8 +91,8 @@ Dictation uses the browser's speech recognition where available (Chrome, includi
 - `packages/react`: shared accessible review, checkout, help, status, handoff, and receipt links.
 - `packages/merchant-adapter`: typed callback interface and transaction service.
 - `packages/paypal`: official v6-compatible server gateway, strict provider parsing, signed webhook verification.
-- `packages/ai`: bounded question routing and fact-based answers.
-- `packages/a11y`: route focus and decorative icon helpers.
+- `packages/ai`: Groq client with redaction, order proposals, bounded question routing and fact-based answers.
+- `packages/a11y`: route focus, vibration patterns and decorative icon helpers.
 - `db`: Drizzle schema, idempotent initial migration, Postgres/PGlite repositories.
 
 Exact dependency versions and integrity hashes are checked into `pnpm-lock.yaml`. Local development uses Next’s supported Webpack mode to avoid an observed Turbopack refresh loop after a build; production builds use Turbopack. See `docs/development-runtime.md`.
@@ -92,16 +113,14 @@ Tests use PostgreSQL-compatible PGlite for real database transaction, uniqueness
 
 ## Deploy to Render
 
-The [Blueprint](render.yaml) provisions one always-on Node web service and managed Postgres in Singapore. It has not been applied to your Render account. It selects paid compute plans: review the resources before deploying.
+The [Blueprint](render.yaml) creates a free Node web service and a free Postgres database in Singapore. Free services sleep after 15 minutes without visitors, and free databases expire 30 days after creation, so upgrade or recreate the database before a long demo period.
 
-1. Push the application and Blueprint to your Git remote.
-2. Validate using `render blueprints validate render.yaml` (Render CLI 2.7+); structural schema validation alone is not a platform deployment check.
-3. Create a Blueprint in Render from your repository. Supply the required secret values through Render, including exact `APP_BASE_URL`, seller ID, webhook ID, and a custom demo password.
-4. Build uses `pnpm install --frozen-lockfile && pnpm build`. The pre-deploy step runs `pnpm db:migrate`; the service starts with `pnpm start` and binds Render’s `PORT` on all interfaces.
-5. Register the HTTPS PayPal webhook, test actual approve/cancel/decline/pending scenarios, and verify provider capture IDs and persisted receipts.
-6. Perform the manual accessibility matrix in `docs/at-test-report.md`. Record actual participant results before publishing accessibility or completion-time claims.
+1. Push the code, then in Render choose **New > Blueprint** and select the repository.
+2. Supply the secret values: `APP_BASE_URL` (the exact `https://...onrender.com` origin), the PayPal sandbox client ID, secret and merchant ID, `AI_API_KEY`, and `DEMO_ACCOUNT_PASSWORD`.
+3. Build runs `pnpm install --frozen-lockfile && pnpm build`. The service runs `pnpm db:migrate` and then `pnpm start`. Auto-deploy is off, so deploy manually after each push.
+4. Register the webhook `https://<your-origin>/api/paypal/webhook` in the PayPal sandbox app, then set `PAYPAL_WEBHOOK_ID` and redeploy.
 
-Production refuses to use a local/ephemeral ledger. The app is sandbox-only even when hosted. The Blueprint uses current compute-plan IDs from [Render’s reference](https://render.com/docs/compute-plans) and same-region private database wiring from [the Blueprint reference](https://render.com/docs/blueprint-spec).
+Production refuses to use a local/ephemeral ledger. The app is sandbox-only even when hosted.
 
 ## Boundaries
 

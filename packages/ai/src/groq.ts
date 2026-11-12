@@ -5,6 +5,20 @@ export type AiSettings = {
   fetch?: typeof fetch;
 };
 const maxRetryWaitSeconds = 3;
+// Shoppers sometimes say or type personal details. Strip the obvious ones before
+// any text leaves the server, since the model never needs them.
+export function redact(text: string): string {
+  return text
+    .replace(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, "[email removed]")
+    .replace(
+      /(?<![\w.])(?:\d[ -]?){12,18}\d(?![\w.])/g,
+      "[card number removed]",
+    )
+    .replace(
+      /(?<![\w.])\+?\d(?:[ -]?\d){9,11}(?![\w.])/g,
+      "[phone number removed]",
+    );
+}
 // Returns the model's text, or null on any failure. Callers treat the text as untrusted.
 export async function complete(
   settings: AiSettings,
@@ -33,7 +47,7 @@ export async function complete(
             include_reasoning: false,
             messages: [
               { role: "system", content: request.system },
-              { role: "user", content: request.user.slice(0, 500) },
+              { role: "user", content: redact(request.user.slice(0, 500)) },
             ],
             ...(request.schema
               ? {

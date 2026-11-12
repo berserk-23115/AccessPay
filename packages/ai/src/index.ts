@@ -103,3 +103,4 @@ export async function explain(
   };
 }
 export * from "./propose";
+export { redact } from "./groq";

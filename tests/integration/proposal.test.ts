@@ -142,3 +142,29 @@ describe("assistant proposals stay inside the catalog", () => {
     expect(failed.kind).toBe("unavailable");
   });
 });
+
+describe("personal details never reach the AI provider", () => {
+  it("removes emails, card numbers and phone numbers before sending", async () => {
+    let sent = "";
+    const capture = (async (_url: string, init: RequestInit) => {
+      sent = String(init.body);
+      return reply(proposal("store-a", [{ sku: "lamp-01", qty: 2 }]))();
+    }) as unknown as typeof fetch;
+    await propose(
+      "2 lamps, card 4111 1111 1111 1111, mail me at a.b@example.com or call +91 98765 43210",
+      { apiKey: "fixture", fetch: capture },
+    );
+    expect(sent).not.toContain("4111");
+    expect(sent).not.toContain("example.com");
+    expect(sent).not.toContain("98765");
+    expect(sent).toContain("2 lamps");
+  });
+  it("keeps ordinary quantities and prices", async () => {
+    const { redact } = await import("@accesspay/ai");
+    expect(redact("3 notebooks and 2 lamps under $50")).toBe(
+      "3 notebooks and 2 lamps under $50",
+    );
+    expect(redact("4111-1111-1111-1111")).toBe("[card number removed]");
+    expect(redact("9876543210")).toBe("[phone number removed]");
+  });
+});

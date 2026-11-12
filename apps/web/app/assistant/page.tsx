@@ -17,6 +17,11 @@ export default async function Page() {
             Type or dictate a request. You’ll review the exact order before
             anything is paid.
           </p>
+          <p className="muted">
+            Your request is sent to an AI service (Groq) to find matching
+            products. Card numbers, emails and phone numbers are removed first,
+            and payment details are never sent.
+          </p>
         </div>
       </div>
       <AssistantForm />
