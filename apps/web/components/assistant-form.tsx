@@ -29,6 +29,7 @@ export function AssistantForm() {
   const recognition = useRef<Recognition | null>(null);
   const input = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
+  const summary = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     setCanDictate(!!createRecognition());
     setCanVibrate(!!navigator.vibrate);
@@ -36,7 +37,7 @@ export function AssistantForm() {
   }, []);
   useEffect(() => {
     if (!result.proposal) return;
-    heading.current?.focus();
+    (summary.current ?? heading.current)?.focus();
     // "success" is reserved for a completed payment; a suggestion has not paid anything.
     playHaptic("attention");
   }, [result]);
@@ -136,20 +137,16 @@ export function AssistantForm() {
           </h2>
           {proposal.kind === "proposal" ? (
             <>
-              <p>
-                {proposal.cart.lineItems
+              {/* One block of plain text, so a screen reader reads the whole order in one go. */}
+              <p ref={summary} tabIndex={-1} className="notice order-summary">
+                {`${proposal.cart.lineItems
                   .map((item) => `${item.name}, quantity ${item.qty}`)
-                  .join("; ")}{" "}
-                from {proposal.cart.merchantDisplayName}.{" "}
-                <strong>
-                  <span aria-hidden="true">
-                    Total {money(proposal.cart.totalMinor)} USD.
-                  </span>
-                  <span className="sr-only">
-                    Total {amountReadback(proposal.cart.totalMinor)}.
-                  </span>
-                </strong>{" "}
-                Next, choose Review this order.
+                  .join(
+                    "; ",
+                  )}, from ${proposal.cart.merchantDisplayName}. Total ${amountReadback(proposal.cart.totalMinor)}. Next, choose Review this order, just below.`}
+              </p>
+              <p aria-hidden="true">
+                <strong>Total {money(proposal.cart.totalMinor)} USD</strong>
               </p>
               <form action={startCheckout}>
                 <input
